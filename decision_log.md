@@ -15,10 +15,6 @@ You may use AI assistance freely on the technical deliverables (the EDA and the 
 
 ---
 
-## Problem Statement
-
-Predict, 7 days before arrival, the probability that a confirmed booking will not be honoured (cancelled or no-show). Alongside this, use descriptive analysis of pricing to flag where rates look mis-set.
-
 
 ## 1. Clarifying questions
 
@@ -29,26 +25,16 @@ Note: If it helps your decision-making, you may assume and list out the stakehol
 
 **Your answer:**
 
-1. Where is the profit margins at now, and where would you want it to be?
+1. How much does one unsold room cost versus a confirmation call, a selective deposit, or an overbooking gone wrong?
+This helps clarifies on the setting of the classification threshold and whether to justify prioritising recall over precision with numbers.
 
-It would give me specific numbers I can work with, on how much to boost the revenue by with the given dataset.
+2. What's the capacity in terms of number of reservation calls we can take a day? Is overbooking allowed?
+If capacity is ~N calls/day, the metric becomes precision rather than recall, and the threshold gets set to flag ~N bookings.
 
-2.  What would need to happen for hotel bookings to get to that profit margin goal?
+3. Is previous_cancellations computed from history before that booking or only over the dataset given from 2023-2025? These can help to inform whether they are more leakage vectors.
 
-Gives me an idea of what are the things she thinks we should work on, can better define the scope of our work so it won't be irrelevant to her later.
-
-3. If there is one thing you can work on that can immediately have a big impact on profit margins, when it comes to hotel bookings, what would that be?
-
-Gives me an idea of what are the top things she intuitively thinks we should focus on first, or the "low-hanging fruits" we can target immediately
-
-4. Why do you think we rarely are able to predict the fact that some rooms are lost at the last minute, and is there things we can do in advance to counteract that?
-
-Gives me an idea of what are the key problems or root causes she thinks are causing the bleed in revenue, so we can address it immediately and be effective in solving the problem
-
-5. Why are our room rates mostly gut feel and fixed?
-
-Again, trying to better understand what is causing the problem by being more specific. See if later on, the ML algorithm can predict this root cause and better manage it in advance.
-
+4. Is a no-show the same problem as a cancellation?
+This helps to determines whether to check one binary target vs two classes. From the data, no-shows are 2.7% of positives, so I combined both — but the question was what got me to check.
 
 
 ---
@@ -60,14 +46,14 @@ Restate, in your own words, the refined problem you decided to solve. List your 
 
 **Your answer:**
 
-What are the biggest 2 things we can do right now to directly increase profit margins for Travelers' Inn from hotel bookings - be it from an increase in revenue, or by improving cost savings?
+Problem statement: 
+Predict, 7 days before arrival, the probability that a confirmed booking will not be honoured (cancelled or no-show). Alongside this, use descriptive analysis of pricing to flag where rates look mis-set.
 
-Assume: we only have this dataset to work with. We know nothing else about the business other than what was given in the extract.
+Assume: We only have this dataset to work with. We know nothing else about the business other than what was given in the extract, 2023–25 booking behaviour is broadly representative of the near future; is_canceled is accurately recorded.
 
-Other framings considered: what are the most profitable and least market segments to target, how do customer and booking types affect profit margins, the impact of seasonal bookings etc
+Framing rejected and what's scoped out — dynamic pricing. Because no other basis to base on from the given dataset, no competitor rates to reference against, no room inventory data etc.
 
-Left out because: too specific, factors I'd already consider in my analysis, Head of Revenue & Reservations likely cares most about the big picture, direct impacts on revenue and the immediate, actionable next steps
-
+Left out: NLP on review comments, hyperparameter tuning - due to time constraints.
 
 
 ---
@@ -79,8 +65,18 @@ Walk through three key decisions you made during Solution Development. For each:
 
 **Your answer:**
 
+1. Time-based split over random split i.e. training on 2023-2024 data and predicting on 2025 data. Because overall cancellation rate is not consistent. On the eight months that 2024 and 2025 share, cancellation rose from 33.5% to 38.8%. A random 80/20 split puts all years together, and it would have put ~80% of 2025 in training, letting the model absorb the higher rate and overstating deployment performance. 
 
+Accepted limitation: 2025 covers only Jan–Aug, so Sep–Dec performance is untested. 
 
+2. Prioritising a working pipeline over an ambitious one, such as not having hyperparameter tuning, no second model for pricing. 
+
+The rationale is that a failing run.sh and a poorly structured README are explicit penalties, and additional time spent on these is not worth the potential loss of marks due to time constraints.
+
+3. Leakage audits.
+Excluding columns like assigned_room_type from the prediction models. Because a room is only assigned for a guest who arrived so including it would confound the model. 
+
+Another example is reservation_status - which s a direct re-encoding of the target (proven by crosstab — Check-Out maps to 0 and Canceled/No-Show to 1 with zero exceptions)
 
 
 ---
@@ -92,8 +88,13 @@ Where did you use the AI assistant in this work? Give three specific examples of
 
 **Your answer:**
 
+I used it throughout the entire assessment - from the brainstorming to the EDA to the modelling and evaluation.
 
+a. I rejected the adr > 1000 and adults > 10 drop rules. I figured Singapore suites can legitimately cost over $1,000/night, especially for group tourist bookings.
 
+b. I caught an unverified claim about required_car_parking_spaces. The AI had listed it as a strong predictor in the README feature table. I challenged it, ran the groupby, and the result showed it was leakage — which changed the pipeline (excluding it from the features instead), the README, and the final mmodel metrics.
+
+c. I rejected an over-engineered EDA cell. The AI wrote the outlier checks as dictionary of rules looped over in a for-loop initially, I pointed out it was clearer and more organised for them to be plain sequential filters for each column instead, even if the code might be longer.
 
 
 ---
@@ -105,8 +106,10 @@ If you had one more week to continue this project, what would you do next, and w
 
 **Your answer:**
 
+1. Hyperparameter tuning e.g. GridSearchCV/RandomizedSearchCV. The signal is because the current values and thresholds used are defaults but never optimised, and this is one of the cheapest remaining gains.
+I would retrain the model many times with different values and keep whichever combination scores best on validation data, to refit the model.
 
-
+2. Validate Sep–Dec performance. The signal is that the current test period covers only Jan–Aug 2025.
 
 
 ---

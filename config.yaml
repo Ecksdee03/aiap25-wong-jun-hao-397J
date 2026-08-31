@@ -33,6 +33,9 @@ features:
     - client_email           # identifier
     - assigned_room_type     # set at check-in (leakage at T-7)
     - arrival_date_year      # split key; unseen year in test would mislead
+    - required_car_parking_spaces  # 0% cancellation whenever >0 (7,162 rows) — near-
+                                    # perfect separation; almost certainly only recorded
+                                    # once a guest checks in (leakage at T-7)
   # Categorical levels rarer than this share are grouped into an "infrequent" bucket.
   rare_category_min_frequency: 0.01
 

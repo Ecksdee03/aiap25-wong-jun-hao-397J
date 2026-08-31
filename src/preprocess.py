@@ -7,7 +7,7 @@ Every rule here mirrors a documented finding in eda.ipynb:
 - categorical case/spacing/typo variants (" No  Deposit ", "Transiant", "Offline TA/T0")
 - hidden missingness as empty strings (agent, company, promo_code)
 - country as a mix of ISO codes, full names, and junk values
-- impossible values (0-guest bookings, 55 adults, lead_time > 2 years, adr > 1000)
+- impossible values e.g. 0-guest bookings, lead_time > 2 years etc
 """
 
 import logging

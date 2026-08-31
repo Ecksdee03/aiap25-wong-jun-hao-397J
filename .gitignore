@@ -5,7 +5,5 @@ venv/
 
 data/hotel.db
 
-outputs/
-
 .DS_Store
 .vscode/
