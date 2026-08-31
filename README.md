@@ -1,6 +1,7 @@
 # AIAP Batch 25 Technical Assessment — Travelers' Inn Cancellation Prediction
 
 **Name (as in NRIC):** Wong Jun Hao
+
 **Email:** jhwong03@gmail.com
 
 ## Problem statement
