@@ -6,10 +6,7 @@
 
 ## Problem statement
 
-Predict, 7 days before arrival, the probability that a confirmed booking will not be
-honoured (cancelled or no-show), so reservations staff can act on the highest-risk
-bookings (confirmation calls, deposit requirements). Alongside this, descriptive
-analysis of pricing flags where rates look mis-set. Full reasoning in `decision_log.md`.
+Predict, 7 days before arrival, the probability that a confirmed booking will not be honoured (cancelled or no-show). Alongside this, use descriptive analysis of pricing to flag where rates look mis-set.
 
 ---
 
