@@ -47,7 +47,7 @@ Restate, in your own words, the refined problem you decided to solve. List your 
 **Your answer:**
 
 Problem statement: 
-Predict, 7 days before arrival, the probability that a confirmed booking will not be honoured (cancelled or no-show). Alongside this, use descriptive analysis of pricing to flag where rates look mis-set.
+Predict, 7 days before arrival, the probability that a confirmed booking will not be honoured (cancelled or no-show). Alongside this, use descriptive analysis of pricing to flag where (which properties' rates) looks more mis-set.
 
 Assume: We only have this dataset to work with. We know nothing else about the business other than what was given in the extract, 2023–25 booking behaviour is broadly representative of the near future; is_canceled is accurately recorded.
 

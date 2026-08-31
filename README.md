@@ -277,9 +277,6 @@ comparison isolating it was run.
   bookings likely reflects a recording convention rather than guest behaviour. If
   that recording practice changes, this feature's predictive value could change
   with it — worth monitoring in production.
-- **Data drift monitoring.** `promo_code`'s distribution was suspiciously uniform in
-  the training data (near-equal counts per code); if the business changes how promo
-  codes are issued, this feature should be re-evaluated for continued relevance.
 - **Hyperparameters are not tuned.** The values in `config.yaml` are sensible
   defaults or moderate manual choices (e.g. `n_estimators: 300`, `max_depth: 16`),
   not the output of grid search or cross-validation — scoped out under the time
