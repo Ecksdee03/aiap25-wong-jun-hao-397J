@@ -228,8 +228,9 @@ alongside for a complete picture, and the classification threshold is a config v
 actual outreach capacity.
 
 **Results, test set = 2025 (40,412 bookings, 38.8% positive):**
+Note that all metrics below are for the **cancelled** class (the positive class the model is scored on).
 
-| Model | Recall | Precision | F1 | ROC-AUC |
+| Model | Recall (cancelled) | Precision (cancelled) | F1 (cancelled) | ROC-AUC |
 |---|---|---|---|---|
 | Logistic Regression | 0.645 | 0.718 | 0.679 | 0.838 |
 | Random Forest | 0.635 | **0.768** | 0.695 | **0.862** |
