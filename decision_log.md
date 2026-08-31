@@ -1,8 +1,8 @@
 # AIAP Technical Assessment — Decision Log
 
-**Candidate name (as in NRIC):**
+**Candidate name (as in NRIC): Wong Jun Hao**
 
-**Email (as used in your application):**
+**Email (as used in your application): jhwong03@gmail.com**
 
 ---
 
@@ -15,6 +15,11 @@ You may use AI assistance freely on the technical deliverables (the EDA and the 
 
 ---
 
+## Problem Statement
+
+Predict, 7 days before arrival, the probability that a confirmed booking will not be honoured (cancelled or no-show). Alongside this, use descriptive analysis of pricing to flag where rates look mis-set.
+
+
 ## 1. Clarifying questions
 
 What questions would you ask to better define and narrow the problem statement? For each question, briefly explain how the answer would meaningfully change your approach. 
@@ -24,7 +29,25 @@ Note: If it helps your decision-making, you may assume and list out the stakehol
 
 **Your answer:**
 
+1. Where is the profit margins at now, and where would you want it to be?
 
+It would give me specific numbers I can work with, on how much to boost the revenue by with the given dataset.
+
+2.  What would need to happen for hotel bookings to get to that profit margin goal?
+
+Gives me an idea of what are the things she thinks we should work on, can better define the scope of our work so it won't be irrelevant to her later.
+
+3. If there is one thing you can work on that can immediately have a big impact on profit margins, when it comes to hotel bookings, what would that be?
+
+Gives me an idea of what are the top things she intuitively thinks we should focus on first, or the "low-hanging fruits" we can target immediately
+
+4. Why do you think we rarely are able to predict the fact that some rooms are lost at the last minute, and is there things we can do in advance to counteract that?
+
+Gives me an idea of what are the key problems or root causes she thinks are causing the bleed in revenue, so we can address it immediately and be effective in solving the problem
+
+5. Why are our room rates mostly gut feel and fixed?
+
+Again, trying to better understand what is causing the problem by being more specific. See if later on, the ML algorithm can predict this root cause and better manage it in advance.
 
 
 
@@ -37,7 +60,13 @@ Restate, in your own words, the refined problem you decided to solve. List your 
 
 **Your answer:**
 
+What are the biggest 2 things we can do right now to directly increase profit margins for Travelers' Inn from hotel bookings - be it from an increase in revenue, or by improving cost savings?
 
+Assume: we only have this dataset to work with. We know nothing else about the business other than what was given in the extract.
+
+Other framings considered: what are the most profitable and least market segments to target, how do customer and booking types affect profit margins, the impact of seasonal bookings etc
+
+Left out because: too specific, factors I'd already consider in my analysis, Head of Revenue & Reservations likely cares most about the big picture, direct impacts on revenue and the immediate, actionable next steps
 
 
 

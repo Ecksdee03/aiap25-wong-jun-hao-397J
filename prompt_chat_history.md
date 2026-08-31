@@ -1,10 +1,10 @@
 # AIAP Technical Assessment — Prompt Chat History
 
-**Candidate name (as in NRIC):**
+**Candidate name (as in NRIC): T0118397J**
 
-**Email (as used in your application):**
+**Email (as used in your application): jhwong03@gmail.com**
 
-**AI assistant(s) used:** _(e.g., Claude 4.6 Sonnet, ChatGPT GPT-5, GitHub Copilot, Cursor)_
+**AI assistant(s) used:** _(Claude 4.6 Sonnet, Cursor)_
 
 ---
 

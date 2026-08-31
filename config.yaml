@@ -1,0 +1,63 @@
+# ── Pipeline configuration ────────────────────────────────────────────────
+# All experiment knobs live here. Override any value by editing this file,
+# or override the config path itself: ./run.sh --config my_config.yaml
+
+data:
+  db_path: data/hotel.db
+  # Downloaded automatically if db_path does not exist (the DB itself is not
+  # committed to the repo, per assessment instructions).
+  db_url: https://techassessment.blob.core.windows.net/aiap25-assessment-data/hotel.db
+  table: bookings
+
+cleaning:
+  # Rows violating these are dropped as impossible values (validated in eda.ipynb).
+  # Note: extreme ADR values and unusual guest counts are deliberately KEPT —
+  # the EDA found no evidence they are errors (suite rates legitimately exceed
+  # $1,000), and tree models split on rank, not magnitude.
+  max_lead_time: 730        # days; the EDA found values of 8-11 years (data errors)
+  drop_zero_guest_bookings: true   # adults+children+babies == 0
+  drop_zero_night_stays: true      # weekend+week nights == 0
+  drop_negative_adr: true
+
+split:
+  # Time-based split: simulate deployment by training on the past only.
+  year_column: arrival_date_year
+  train_years: [2023, 2024]
+  test_years: [2025]
+
+features:
+  # Excluded from the model (leakage or identifiers — see EDA / README).
+  exclude:
+    - is_canceled            # target
+    - reservation_status     # outcome re-encoded (leakage)
+    - client_email           # identifier
+    - assigned_room_type     # set at check-in (leakage at T-7)
+    - arrival_date_year      # split key; unseen year in test would mislead
+  # Categorical levels rarer than this share are grouped into an "infrequent" bucket.
+  rare_category_min_frequency: 0.01
+
+model:
+  # One of: logistic_regression | random_forest | hist_gradient_boosting
+  name: hist_gradient_boosting
+  # Classification threshold on predicted probability (business lever:
+  # lower -> higher recall on cancellations, more outreach calls).
+  threshold: 0.5
+  logistic_regression:
+    C: 1.0
+    max_iter: 2000
+    class_weight: balanced
+  random_forest:
+    n_estimators: 300
+    max_depth: 16
+    min_samples_leaf: 5
+    class_weight: balanced
+    n_jobs: -1
+    random_state: 42
+  hist_gradient_boosting:
+    learning_rate: 0.1
+    max_iter: 300
+    class_weight: balanced
+    random_state: 42
+
+output:
+  dir: outputs
